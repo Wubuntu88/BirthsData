@@ -1,0 +1,23 @@
+#!/usr/bin/env python
+import numpy as np
+from scipy.optimize import curve_fit
+import matplotlib.pyplot as plt
+import math as math
+
+def cos_fit(x, b0, b1, b2, p):
+	return b0 + b1*np.cos(2*np.pi*x/p) + b2*np.sin(2*np.pi*x/p)
+
+x = np.linspace(0, 2*np.pi,256)
+y = np.cos(x)
+
+y_fit = curve_fit(cos_fit, x, y)
+
+optParams = y_fit[0]
+
+ys = []
+for x_val in x:
+	theY = cos_fit(x_val, optParams[0], optParams[1], optParams[2], optParams[3])
+	ys.append(theY)
+
+plt.plot(x, ys)
+plt.show()
